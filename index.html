@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f4f0">
+  <title>Creator studio · Fieldnote</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark">f.</span><span>fieldnote <small>CREATOR STUDIO</small></span></a>
+    <div class="top-actions"><div class="locale-controls" aria-label="Language and theme"><div class="language-switch"><button type="button" data-lang="en">EN</button><button type="button" data-lang="id" class="active">ID</button></div><button type="button" class="theme-toggle" id="themeToggle">☾ Mode gelap</button></div><span class="connection"><i></i><span id="connectionText">Tidak terhubung</span></span><button class="button button-dark" id="addProductTop">＋ Tambah produk</button></div>
+  </header>
+  <main class="workspace">
+    <aside class="sidebar">
+      <p class="eyebrow" data-i18n="workspace">RUANG KERJA</p>
+      <a class="nav-item active" href="index.html"><span>▦</span><span data-i18n="products">Produk</span><b id="navCount">0</b></a>
+      <a class="nav-item" href="../customers/index.html" target="_blank"><span>↗</span><span data-i18n="storefront">Halaman pelanggan</span></a>
+      <div class="sidebar-note"><span class="note-icon">✳</span><strong data-i18n-html="sidebarTitle">Rekomendasi pilihanmu,<br>di satu tempat.</strong><p data-i18n="sidebarDescription">Perbarui detail dan tautan produk. Perubahan akan tampil di halaman pelanggan.</p></div>
+      <div class="profile"><div class="avatar">F</div><div><strong data-i18n="creatorAccount">Akun kreator</strong><small data-i18n="affiliatePartner">Mitra afiliasi</small></div><span class="profile-menu">···</span></div>
+    </aside>
+    <section class="main-content">
+      <div class="page-heading"><div><p class="eyebrow" data-i18n="yourCatalog">KATALOG ANDA</p><h1 data-i18n="products">Produk</h1><p class="subtitle" data-i18n="catalogSubtitle">Kelola produk yang ingin Anda bagikan.</p></div><button class="button button-dark" id="addProduct">＋ Tambah produk</button></div>
+      <div class="toolbar"><div class="search"><span>⌕</span><input id="searchInput" type="search" placeholder="Cari produk" data-i18n-placeholder="searchProducts"></div><select id="catalogCategoryFilter" aria-label="Filter produk berdasarkan kategori"><option value="">Semua kategori</option></select><select id="catalogStatusFilter" data-i18n-aria-label="statusFilter" aria-label="Filter berdasarkan status"><option value="" data-i18n="allStatuses">Semua status</option><option value="available" data-i18n="status_available">Tersedia</option><option value="soldout" data-i18n="status_soldout">Habis</option><option value="restock" data-i18n="status_restock">Dalam proses restock</option></select><div class="toolbar-right"><span id="resultCount">0 produk</span><button id="refreshButton" class="button button-light">↻ &nbsp;Segarkan</button></div></div>
+      <div id="notice" class="notice" role="status" hidden></div>
+      <div id="loading" class="loading">Memuat produk…</div>
+      <div id="emptyState" class="empty-state" hidden><div class="empty-art">✳</div><h2 data-i18n="emptyTitle">Katalog Anda dimulai di sini</h2><p data-i18n="emptyDescription">Tambahkan produk untuk dibagikan kepada audiens Anda.</p><button class="button button-dark" id="emptyAdd">＋ Tambah produk pertama</button></div>
+      <div id="productGrid" class="product-grid"></div>
+      <p class="footnote" data-i18n="driveFootnote">Pastikan foto di Google Drive dapat dilihat oleh siapa saja yang memiliki tautannya.</p>
+    </section>
+  </main>
+  <dialog id="productDialog">
+    <form id="productForm" method="dialog">
+      <div class="dialog-heading"><div><p class="eyebrow" data-i18n="productDetails">DETAIL PRODUK</p><h2 id="dialogTitle">Tambah produk</h2></div><button type="button" class="close-button" id="closeDialog" aria-label="Tutup">×</button></div>
+      <input type="hidden" id="productId">
+      <label><span data-i18n="productName">Nama produk</span><input id="name" required maxlength="120" placeholder="Contoh: Tas kanvas harian" data-i18n-placeholder="namePlaceholder"></label>
+      <div class="form-row"><label><span data-i18n="priceRupiah">Harga (Rupiah)</span><input id="price" type="text" inputmode="numeric" autocomplete="off" maxlength="18" placeholder="Masukkan angka, contoh: 250000" data-i18n-placeholder="pricePlaceholder"><span class="upload-status" data-i18n="priceHint">Masukkan angka saja; tampilan akan otomatis menjadi format Rupiah.</span></label><label><span data-i18n="category">Kategori</span><select id="category" required><option value="">Pilih kategori</option></select><span id="newCategoryWrap" class="new-category-wrap" hidden><input id="newCategory" type="text" maxlength="60" placeholder="Nama kategori baru" data-i18n-placeholder="newCategoryPlaceholder"><small class="upload-status" data-i18n="newCategoryHint">Kategori baru akan disimpan saat produk disimpan.</small></span></label></div>
+      <label class="upload-label"><span data-i18n="productPhoto">Foto produk</span> <span class="label-hint" data-i18n="imageTypesHint">JPG, PNG, GIF atau WebP · maks. 8 MB</span><input id="imageFile" type="file" accept="image/jpeg,image/png,image/gif,image/webp"><span id="uploadStatus" class="upload-status">Pilih foto. Foto akan diunggah ke folder Drive sesuai tanggal.</span></label>
+      <input type="hidden" id="imageUrl"><div id="imagePreview" class="image-preview" hidden></div>
+      <label><span data-i18n="affiliateLink">Tautan produk afiliasi</span><input id="productUrl" type="url" placeholder="https://…" required></label>
+      <label><span data-i18n="shortDescription">Deskripsi singkat</span><textarea id="description" rows="3" maxlength="300" placeholder="Apa yang membuat produk ini menarik?" data-i18n-placeholder="descriptionPlaceholder"></textarea></label>
+      <label class="checkbox-label"><input id="featured" type="checkbox"><span data-i18n="featureProduct">Jadikan produk unggulan</span></label>
+      <div class="save-error" id="saveErrorBox" hidden><p id="saveStatus" class="save-status" role="status"></p><button type="button" class="copy-error-button" id="copyErrorButton">Salin pesan error</button></div>
+      <div class="dialog-actions"><button type="button" class="button button-light" id="cancelDialog">Batal</button><button class="button button-dark" id="saveButton">Simpan produk</button></div>
+    </form>
+  </dialog>
+  <script src="i18n.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
